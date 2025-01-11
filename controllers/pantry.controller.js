@@ -169,7 +169,8 @@ exports.assignPreparationStaff = async (req, res) => {
     }
 
     // Fetch the pantry staff
-    const pantryStaff = await PantryStaff.find({ info: preparedBy });
+    const pantryStaff = await PantryStaff.findOne({ info: preparedBy });
+    console.log(pantryStaff);
     if (!pantryStaff) {
       return res.status(404).json({
         success: false,
@@ -195,7 +196,7 @@ exports.assignPreparationStaff = async (req, res) => {
     }
 
     // Add the diet chart to the staff's assigned tasks
-    pantryStaff.assignedTask.push(dietChartId);
+    pantryStaff?.assignedTask?.push(dietChartId);
     await pantryStaff.save();
 
     res.status(200).json({
@@ -212,38 +213,27 @@ exports.assignPreparationStaff = async (req, res) => {
     });
   }
 };
-// dietChartId
-// :
-// "678132c63c6264cc099e82fd"
-// preparationStatus
-// :
-// "In Progress"
-// preparedBy
-// :
-// "678133093c6264cc099e8306"
-// Assign delivery staff to a diet chart
+
 exports.assignDeliveryStaff = async (req, res) => {
   try {
-    const { dietChartId, pantryStaffId } = req.body;
+    const { dietChartId, deliveredBy } = req.body;
+    console.log(dietChartId, deliveredBy);
 
     // Validate inputs
-    if (!dietChartId || !pantryStaffId) {
+    if (!dietChartId || !deliveredBy) {
       return res.status(400).json({
         success: false,
         message: "Diet chart ID and pantry staff ID are required",
       });
     }
 
-    // Fetch the pantry staff
-    // const pantryStaff = await PantryStaff.find({
-    //   info: mongoose.Schema.Types.ObjectId(pantryStaffId),
-    // });
-    // if (!pantryStaff) {
-    //   return res.status(404).json({
-    //     success: false,
-    //     message: "Pantry staff not found",
-    //   });
-    // }
+    const pantryStaff = await PantryStaff.findOne({ info: deliveredBy });
+    if (!pantryStaff) {
+      return res.status(404).json({
+        success: false,
+        message: "Pantry staff not found",
+      });
+    }
 
     // Update the diet chart with the assigned delivery staff
     const updatedDietChart = await DietChart.findByIdAndUpdate(

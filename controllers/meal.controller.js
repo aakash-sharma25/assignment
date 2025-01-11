@@ -124,7 +124,7 @@ exports.getMealBoxById = async (req, res) => {
   }
 };
 
-// Update Delivery Status
+
 exports.updateDeliveryStatus = async (req, res) => {
   try {
     const { dietChartId, deliveryStatus } = req.body;
@@ -175,7 +175,7 @@ exports.updateDeliveryStatus = async (req, res) => {
   }
 };
 
-// Update Preparation Status
+
 exports.updatePreparationStatus = async (req, res) => {
   try {
     const { dietChartId, preparationStatus } = req.body;

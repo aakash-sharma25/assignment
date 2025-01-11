@@ -46,7 +46,8 @@ exports.getAllDietCharts = async (req, res) => {
   try {
     const dietCharts = await DietChart.find()
       .populate("patientId", "name roomDetails")
-      .populate("deliveredBy", "name");
+      .populate("deliveredBy", "name")
+      .populate("preparedBy", "name");
 
     return res.status(200).json({
       success: true,

@@ -22,7 +22,6 @@ router.post("/add-patient", addPatient);
 router.get("/patient/:id", getPatientById);
 
 router.post("/add-diet", addDietChart);
-router.get("/all-diet", getAllDietCharts);
 router.get("/diet/:patientId", getDietChartByPatientId);
 
 router.post("/add-pantryStaff", addPantryStaff);
