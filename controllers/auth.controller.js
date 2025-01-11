@@ -105,7 +105,6 @@ exports.loginController = async (req, res) => {
         message: "User login successful",
         user: {
           id: user._id,
-          email: user.email,
           role: user.role,
           accessToken,
         },
