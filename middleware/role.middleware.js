@@ -1,8 +1,8 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const User = require("../models/users.model");
+const User = require("../models/user.model");
 
-exports.isAdmin = async (req, res, next) => {
+exports.isManager = async (req, res, next) => {
   try {
     const token =
       req.cookies?.accessToken ||
@@ -21,7 +21,7 @@ exports.isAdmin = async (req, res, next) => {
       process.env.ACCESS_TOKEN_SECRET
     );
 
-    if (decodedToken.role !== "SuperAdmin") {
+    if (decodedToken.role !== "Manager") {
       return res.status(404).json({
         success: false,
         message: "Protected route for admin",
@@ -55,7 +55,10 @@ exports.isPantryStaff = async (req, res, next) => {
       process.env.ACCESS_TOKEN_SECRET
     );
 
-    if (decodedToken.role !== "Vendor") {
+    if (
+      decodedToken.role !== "PantryStaff" ||
+      decodedToken.role !== "DeliveryPerson"
+    ) {
       return res.status(404).json({
         success: false,
         message: "Protected route for Vendor",
@@ -63,77 +66,6 @@ exports.isPantryStaff = async (req, res, next) => {
       });
     }
     req.body.vendorId = decodedToken._id;
-    next();
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      success: true,
-      message: "invalid token",
-    });
-  }
-};
-
-exports.isDeliveryPerson = async (req, res, next) => {
-  try {
-    const token =
-      req.cookies?.accessToken ||
-      req.header("Authorization")?.replace("Bearer ", "");
-
-    if (!token) {
-      return res.status(400).json({
-        success: false,
-        message: "token is missing",
-      });
-    }
-
-    const decodedToken = await jwt.verify(
-      token,
-      process.env.ACCESS_TOKEN_SECRET
-    );
-
-    if (decodedToken.role !== "Employee") {
-      return res.status(404).json({
-        success: false,
-        message: "Protected route for Employee",
-        // decodedToken,
-      });
-    }
-    req.body.employeeId = decodedToken._id;
-    next();
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      success: true,
-      message: "invalid token",
-    });
-  }
-};
-exports.isManager = async (req, res, next) => {
-  try {
-    const token =
-      req.cookies?.accessToken ||
-      req.header("Authorization")?.replace("Bearer ", "");
-
-    if (!token) {
-      return res.status(400).json({
-        success: false,
-        message: "token is missing",
-      });
-    }
-
-    const decodedToken = await jwt.verify(
-      token,
-      process.env.ACCESS_TOKEN_SECRET
-    );
-
-    if (decodedToken.role !== "Manager") {
-      return res.status(404).json({
-        success: false,
-        message: "Protected route for Manager",
-        decodedToken,
-      });
-    }
-    req.body.managerId = decodedToken._id;
     next();
   } catch (error) {
     console.log(error);

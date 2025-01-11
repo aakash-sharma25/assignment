@@ -12,16 +12,16 @@ const {
   assignDeliveryStaff,
   assignPreparationStaff,
 } = require("../controllers/pantry.controller");
+const { isManager } = require("../middleware/role.middleware");
 
 const router = express.Router();
 
 router.get("/delivery", getAllDeliveryPersonnel);
 router.post("/add-delivery", addDeliveryPersonnel);
 
-router.patch("/assign-delivery", assignDeliveryStaff);
-router.patch("/assign-preparation", assignPreparationStaff);
+router.patch("/assign-delivery", isManager, assignDeliveryStaff);
+router.patch("/assign-preparation", isManager, assignPreparationStaff);
 
-// router.get("/get-all",getAllPantryStaff);
 router.patch("/update-preparation-status", updatePreparationStatus);
 router.patch("/update-delivery-status", updateDeliveryStatus);
 
