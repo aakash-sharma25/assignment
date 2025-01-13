@@ -14,7 +14,7 @@ app.use(
       "http://localhost:5173",
       "https://assignment-frontend-gamma-six.vercel.app/",
     ],
-    credentials: true, // Allow cookies and credentials
+    credentials: true, 
   })
 );
 

@@ -5,8 +5,9 @@ const User = require("../models/user.model");
 exports.isManager = async (req, res, next) => {
   try {
     const token =
-      req.cookies?.accessToken ||
+      (await req.cookies?.accessToken) ||
       req.header("Authorization")?.replace("Bearer ", "");
+    console.log("the token is ", token);
 
     if (!token) {
       return res.status(400).json({
@@ -14,13 +15,12 @@ exports.isManager = async (req, res, next) => {
         message: "token is missing",
       });
     }
-    // console.log(token);
 
     const decodedToken = await jwt.verify(
       token,
       process.env.ACCESS_TOKEN_SECRET
     );
-
+    console.log(decodedToken)
     if (decodedToken.role !== "Manager") {
       return res.status(404).json({
         success: false,
