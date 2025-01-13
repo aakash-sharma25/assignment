@@ -13,13 +13,12 @@ const {
   addPantryStaff,
   getAllPantryStaff,
 } = require("../controllers/pantry.controller");
-const { createMealBox } = require("../controllers/meal.controller");
 const { isManager } = require("../middleware/role.middleware");
 
 const router = express.Router();
 
-router.get("/patients", isManager, getAllPatients);
-router.post("/add-patient", isManager, addPatient);
+router.get("/patients", getAllPatients);
+router.post("/add-patient", addPatient);
 router.get("/patient/:id", isManager, getPatientById);
 
 router.post("/add-diet", addDietChart);

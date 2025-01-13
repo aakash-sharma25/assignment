@@ -19,8 +19,8 @@ const router = express.Router();
 router.get("/delivery", getAllDeliveryPersonnel);
 router.post("/add-delivery", addDeliveryPersonnel);
 
-router.patch("/assign-delivery", isManager, assignDeliveryStaff);
-router.patch("/assign-preparation", isManager, assignPreparationStaff);
+router.patch("/assign-delivery", assignDeliveryStaff);
+router.patch("/assign-preparation", assignPreparationStaff);
 
 router.patch("/update-preparation-status", updatePreparationStatus);
 router.patch("/update-delivery-status", updateDeliveryStatus);
