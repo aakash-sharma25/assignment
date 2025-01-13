@@ -19,11 +19,11 @@ const { isManager } = require("../middleware/role.middleware");
 const router = express.Router();
 
 router.get("/patients", isManager, getAllPatients);
-router.post("/add-patient",isManager, addPatient);
-router.get("/patient/:id",isManager, getPatientById);
+router.post("/add-patient", isManager, addPatient);
+router.get("/patient/:id", isManager, getPatientById);
 
-router.post("/add-diet",isManager, addDietChart);
-router.get("/diet/:patientId",isManager, getDietChartByPatientId);
+router.post("/add-diet", addDietChart);
+router.get("/diet/:patientId", getDietChartByPatientId);
 
 router.post("/add-pantryStaff", addPantryStaff);
 router.get("/all-pantryStaff", getAllPantryStaff);
