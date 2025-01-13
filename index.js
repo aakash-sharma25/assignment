@@ -8,23 +8,20 @@ const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
 const app = express();
+
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://assignment-frontend-gamma-six.vercel.app/",
+  "https://assignment-frontend-gamma-six.vercel.app",
 ];
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin: (origin, callback) => {
+    callback(null, origin);
+  },
+  credentials: true, 
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json({ limit: "20kb" }));
 app.use(express.urlencoded({ extended: true, limit: "20kb" }));
