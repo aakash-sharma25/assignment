@@ -95,6 +95,7 @@ exports.loginController = async (req, res) => {
       httpOnly: true,
       maxAge: 5 * 24 * 60 * 60 * 1000,
       secure: true,
+      sameSite: "None",
     };
 
     return res
