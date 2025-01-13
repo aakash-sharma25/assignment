@@ -54,6 +54,7 @@ exports.getAllDietCharts = async (req, res) => {
       message: "Diet charts retrieved successfully",
       dietCharts,
     });
+    
   } catch (error) {
     console.error("Error fetching diet charts:", error);
     res.status(500).json({
